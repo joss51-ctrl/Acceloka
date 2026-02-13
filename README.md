@@ -29,8 +29,9 @@ This project is a technical assessment for the **Acceloka Exam**, focusing on a 
 1. **Clone the repository**:
    ```
    git clone [https://github.com/joss51-ctrl/Acceloka.git](https://github.com/joss51-ctrl/Acceloka.git)
+   ```
 
-2. **Database configuration**
+3. **Database configuration**
    Update the ConnectionStrings in appsettings.json to point to your local SQL Server instance:
   ```
    "ConnectionStrings": {
@@ -43,9 +44,11 @@ This project is a technical assessment for the **Acceloka Exam**, focusing on a 
     Update-Database
 ```
 4. **Run the Application**
+   
    Press F5 in Visual Studio to start the API and open the Swagger UI.
 
 **Project Structure**
+
 Acceloka_Exam1: The main Web API project containing Controllers, Features (CQRS), and Business Logic.
 
 Acceloka.entities: The Infrastructure and Domain layer containing the DBContext and Entity Models.
