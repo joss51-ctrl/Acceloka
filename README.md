@@ -1,7 +1,5 @@
 # Acceloka Ticket Management System
 
-This project is a technical assessment for the **Acceloka Exam**, focusing on a Ticket Management System built with **.NET Core 8**, **MediatR**, and **Clean Architecture** principles.
-
 ## Features
 * **Get Available Tickets**: View all tickets that are still within their event date and have remaining quota.
 * **Book Tickets**: Register a new booking for one or more ticket categories.
