@@ -1,7 +1,7 @@
-﻿CREATE DATABASE Exam1
+﻿CREATE DATABASE Acceloka_Exam1
 GO
 
-USE Exam1
+USE Acceloka_Exam1
 
 CREATE TABLE Tickets (
     TicketId INT NOT NULL
