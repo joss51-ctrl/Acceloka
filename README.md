@@ -27,7 +27,7 @@ This project is a technical assessment for the **Acceloka Exam**, focusing on a 
 
 ### Installation
 1. **Clone the repository**:
-   ```bash
+   ```
    git clone [https://github.com/joss51-ctrl/Acceloka.git](https://github.com/joss51-ctrl/Acceloka.git)
 
 2. **Database configuration**
@@ -37,15 +37,15 @@ This project is a technical assessment for the **Acceloka Exam**, focusing on a 
   "DefaultConnection": "Server=.;Database=Acceloka_Exam1;Trusted_Connection=True;TrustServerCertificate=True;"
   }
 ```
-4. **Apply migration**
+3. **Apply migration**
    Run the following command in the Package Manager Console to set up your database:
 ```
     Update-Database
 ```
-6. **Run the Application**
+4. **Run the Application**
    Press F5 in Visual Studio to start the API and open the Swagger UI.
 
-Project Structure
+**Project Structure**
 Acceloka_Exam1: The main Web API project containing Controllers, Features (CQRS), and Business Logic.
 
 Acceloka.entities: The Infrastructure and Domain layer containing the DBContext and Entity Models.
