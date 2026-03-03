@@ -47,17 +47,19 @@
 
 ### Frontend setup
 1. **Navigate to frontend folder**
-   ```
-   cd Acceloka_Frontend
-   ```
-2.**Install dependencies**
-   ``` 
+```
+    cd Acceloka_Frontend
+```
+   
+2. **Install dependencies**
+``` 
    npm install
-   ```
+```
+   
 3. **Run development server**
-   ```
+```
    npm run dev
-   ```
+```
    
 Acceloka/
 │
