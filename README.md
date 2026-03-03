@@ -23,7 +23,7 @@
 * .NET 8 SDK
 * SQL Server Management Studio
 
-### Installation
+### Backend setup
 1. **Clone the repository**:
    ```
    git clone [https://github.com/joss51-ctrl/Acceloka.git](https://github.com/joss51-ctrl/Acceloka.git)
@@ -45,8 +45,16 @@
    
    Press F5 in Visual Studio to start the API and open the Swagger UI.
 
-**Project Structure**
-
-Acceloka_Exam1: The main Web API project containing Controllers, Features (CQRS), and Business Logic.
-
-Acceloka.entities: The Infrastructure and Domain layer containing the DBContext and Entity Models.
+### Frontend setup
+1. **Navigate to frontend folder**
+   ``` cd Acceloka_Frontend ```
+2.**Install dependencies**
+   ``` npm install```
+3. **Run development server**
+   ``` npm run dev ```
+   
+Acceloka/
+│
+├── Acceloka_Exam1          → Main Web API project (Controllers, CQRS, Business Logic)
+├── Acceloka.entities       → Infrastructure & Domain Layer
+└── Acceloka_Frontend       → Next.js Frontend Application
