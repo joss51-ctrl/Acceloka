@@ -66,6 +66,9 @@
 **Project Structure**
 
 Acceloka 
+
 ├── Acceloka_Exam1          → Main Web API project (Controllers, CQRS, Business Logic)
+
 ├── Acceloka.entities       → Infrastructure & Domain Layer
+
 └── Acceloka_Frontend       → Next.js Frontend Application
