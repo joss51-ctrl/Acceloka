@@ -60,9 +60,12 @@
 ```
    npm run dev
 ```
-   
-Acceloka/
-│
+
+**Make sure backend API is already running before using the frontend.**
+
+**Project Structure**
+
+Acceloka 
 ├── Acceloka_Exam1          → Main Web API project (Controllers, CQRS, Business Logic)
 ├── Acceloka.entities       → Infrastructure & Domain Layer
 └── Acceloka_Frontend       → Next.js Frontend Application
