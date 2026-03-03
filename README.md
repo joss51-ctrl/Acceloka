@@ -29,7 +29,7 @@
    git clone [https://github.com/joss51-ctrl/Acceloka.git](https://github.com/joss51-ctrl/Acceloka.git)
    ```
 
-3. **Database configuration**
+2. **Database configuration**
    Update the ConnectionStrings in appsettings.json to point to your local SQL Server instance:
   ```
    "ConnectionStrings": {
@@ -47,11 +47,17 @@
 
 ### Frontend setup
 1. **Navigate to frontend folder**
-   ``` cd Acceloka_Frontend ```
+   ```
+   cd Acceloka_Frontend
+   ```
 2.**Install dependencies**
-   ``` npm install```
+   ``` 
+   npm install
+   ```
 3. **Run development server**
-   ``` npm run dev ```
+   ```
+   npm run dev
+   ```
    
 Acceloka/
 │
