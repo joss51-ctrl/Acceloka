@@ -14,3 +14,4 @@ public partial class BookedTickets
 
     public virtual Tickets TicketCodeNavigation { get; set; } = null!;
 }
+

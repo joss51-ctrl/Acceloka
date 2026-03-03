@@ -13,76 +13,75 @@ public class GetAvailableTicketsHandler : IRequestHandler<GetAvailableTicketsQue
         _context = context;
     }
 
-public async Task<GetAvailableTicketsResponse> Handle(GetAvailableTicketsQuery request, CancellationToken cancellationToken)
-{
-    var query = _context.Tickets.AsQueryable();
-
-    if (!string.IsNullOrEmpty(request.CategoryName))
+    public async Task<GetAvailableTicketsResponse> Handle(GetAvailableTicketsQuery request, CancellationToken cancellationToken)
     {
-        query = query.Where(t => t.CategoryName.Contains(request.CategoryName));
-    }
+        var query = _context.Tickets.AsNoTracking().AsQueryable();
 
-    if (!string.IsNullOrEmpty(request.TicketCode))
-    {
-        query = query.Where(t => t.TicketCode.Contains(request.TicketCode));
-    }
-
-    if (!string.IsNullOrEmpty(request.TicketName))
-    {
-        query = query.Where(t => t.TicketName.Contains(request.TicketName));
-    }
-
-    if (request.MaxPrice.HasValue)
-    {
-        query = query.Where(t => t.Price <= request.MaxPrice.Value);
-    }
-
-    // Count Total Data & Total Pages
-    var totalCount = await query.CountAsync(cancellationToken);
-    if (totalCount == 0)
-    {
-        return null!;
-    }
-    int pageSize = 10;
-    
-    // Count maximal page size
-    int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-    int pageNumber = request.PageNumber <= 0 ? 1 : request.PageNumber;
-    
-if (pageNumber > totalPages)
-    {
-        throw new KeyNotFoundException($"Page {pageNumber} is not found. Total pages available: {totalPages}.");
-    }
-
-    string orderBy = string.IsNullOrWhiteSpace(request.OrderBy) ? "ticketcode" : request.OrderBy.ToLower();
-    bool isDescending = request.OrderState?.ToLower() == "desc";
-
-    query = isDescending 
-        ? ApplySorting(query, orderBy, true) 
-        : ApplySorting(query, orderBy, false);
-
-    // Pagination 
-    int skip = (pageNumber - 1) * pageSize;
-
-    var tickets = await query
-        .Skip(skip)
-        .Take(pageSize)
-        .ToListAsync(cancellationToken);
-
-    return new GetAvailableTicketsResponse
-    {
-        TotalTickets = totalCount,
-        Tickets = tickets.Select(x => new TicketDto
+        // FILTERS
+        if (!string.IsNullOrWhiteSpace(request.CategoryName))
         {
-            EventDate = x.EventDate.ToString("dd-MM-yyyy HH:mm"),
-            Quota = x.Quota,
-            TicketCode = x.TicketCode,
-            TicketName = x.TicketName,
-            CategoryName = x.CategoryName,
-            Price = x.Price
-        }).ToList()
-    };
-}
+            query = query.Where(t => t.CategoryName == request.CategoryName);
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.TicketCode))
+        {
+            query = query.Where(t => t.TicketCode.Contains(request.TicketCode));
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.TicketName))
+        {
+            query = query.Where(t => t.TicketName.Contains(request.TicketName));
+        }
+
+        if (request.MaxPrice.HasValue)
+        {
+            query = query.Where(t => t.Price <= request.MaxPrice.Value);
+        }
+
+        // COUNT
+        var totalCount = await query.CountAsync(cancellationToken);
+
+        int pageNumber = request.Page <= 0 ? 1 : request.Page;
+        int pageSize = request.PageSize <= 0 ? 10 : request.PageSize;
+        int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+        if (totalCount > 0 && pageNumber > totalPages)
+        {
+            throw new KeyNotFoundException($"Page {pageNumber} is not found. Total pages available: {totalPages}.");
+        }
+
+        // SORTING
+        string orderBy = string.IsNullOrWhiteSpace(request.OrderBy)
+            ? "ticketcode"
+            : request.OrderBy.ToLower();
+
+        bool isDescending = request.OrderState?.ToLower() == "desc";
+
+        query = ApplySorting(query, orderBy, isDescending);
+
+        // PAGINATION
+        int skip = (pageNumber - 1) * pageSize;
+
+        var tickets = await query
+            .Skip(skip)
+            .Take(pageSize)
+            .Select(x => new TicketDto
+            {
+                EventDate = x.EventDate,
+                Quota = x.Quota,
+                TicketCode = x.TicketCode,
+                TicketName = x.TicketName,
+                CategoryName = x.CategoryName,
+                Price = x.Price
+            })
+            .ToListAsync(cancellationToken);
+
+        return new GetAvailableTicketsResponse
+        {
+            TotalTickets = totalCount,
+            Tickets = tickets
+        };
+    }
     private IQueryable<Acceloka.entities.Model.Tickets> ApplySorting(IQueryable<Acceloka.entities.Model.Tickets> query, string orderBy, bool desc)
 {
     return orderBy switch

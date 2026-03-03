@@ -1,6 +1,6 @@
-﻿using MediatR;
+﻿using Acceloka_Exam1.Features.Tickets.GetAvailableTickets;
+using MediatR;
 
-namespace Acceloka_Exam1.Features.Tickets.GetAvailableTickets;
 public class GetAvailableTicketsQuery : IRequest<GetAvailableTicketsResponse>
 {
     public string? CategoryName { get; set; }
@@ -11,5 +11,7 @@ public class GetAvailableTicketsQuery : IRequest<GetAvailableTicketsResponse>
     public DateTime? MaxEventDate { get; set; }
     public string? OrderBy { get; set; }
     public string? OrderState { get; set; }
-    public int PageNumber { get; set; } = 1;
+
+    public int Page { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
 }

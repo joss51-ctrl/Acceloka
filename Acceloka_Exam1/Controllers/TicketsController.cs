@@ -1,4 +1,5 @@
 ﻿using Acceloka_Exam1.Features.Tickets.GetAvailableTickets;
+using Acceloka_Exam1.Features.Tickets.GetTicketCategories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,12 +9,16 @@ public class TicketsController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public TicketsController(IMediator mediator) => _mediator = mediator;
+    public TicketsController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
 
     [HttpGet("get-available-ticket")]
     [ProducesResponseType(typeof(GetAvailableTicketsResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAvailableTicket([FromQuery] GetAvailableTicketsQuery query)
+    public async Task<IActionResult> GetAvailableTicket(
+        [FromQuery] GetAvailableTicketsQuery query)
     {
         try
         {
@@ -30,5 +35,12 @@ public class TicketsController : ControllerBase
         {
             return NotFound(new { message = ex.Message });
         }
+    }
+
+    [HttpGet("categories")]
+    public async Task<IActionResult> GetCategories()
+    {
+        var result = await _mediator.Send(new GetTicketCategoriesQuery());
+        return Ok(result);
     }
 }

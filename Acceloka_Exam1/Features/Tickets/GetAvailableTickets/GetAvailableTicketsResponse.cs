@@ -8,7 +8,7 @@ public class GetAvailableTicketsResponse
 
 public class TicketDto
 {
-    public string EventDate { get; set; } = string.Empty;
+    public DateTime EventDate { get; set; }
     public int Quota { get; set; }
     public string TicketCode { get; set; } = string.Empty;
     public string TicketName { get; set; } = string.Empty;
